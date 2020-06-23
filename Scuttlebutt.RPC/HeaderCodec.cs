@@ -19,6 +19,9 @@ using System.Linq;
 
 namespace Scuttlebutt.RPC.Codec
 {
+    /// <summary>
+    ///   Represents the type of messages that can be sent
+    /// </summary>
     public enum BodyType
     {
         Binary = 0b_00,
@@ -26,6 +29,9 @@ namespace Scuttlebutt.RPC.Codec
           JSON = 0b_10,
     }
 
+    /// <summary>
+    ///   A class to interact with the header, providing access to the inner storage
+    /// </summary>
     public class Header
     {
         public sbyte[] Inner;
@@ -40,6 +46,11 @@ namespace Scuttlebutt.RPC.Codec
         public Header()
         {
             this.Inner = new sbyte[FLAGS_SIZE + BLENGTH_SIZE + REQNUM_SIZE];
+        }
+
+        public Header(sbyte[] inner)
+        {
+            this.Inner = inner;
         }
 
         public Header SetStreamBit(bool isstream)

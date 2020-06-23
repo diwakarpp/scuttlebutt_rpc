@@ -1,4 +1,4 @@
-﻿// Copyright © 2020 Pedro Gómez Martín <zentauro@riseup.net>
+// Copyright © 2020 Pedro Gómez Martín <zentauro@riseup.net>
 //
 // This file is part of the library Scuttlebutt.RPC which
 // is free software: you can redistribute it and/or modify
@@ -14,15 +14,28 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this library. If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Text.Json.Serialization;
 
-namespace ScuttlebuttRPC
+namespace Scuttlebutt.RPC
 {
-    public class RPC
+    public class HistoryStreamRequest : RequestArgs
     {
-        RPC()
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("seq")]
+        public string Seq { get; set; }
+        [JsonPropertyName("limit")]
+        public string Limit { get; set; }
+        [JsonPropertyName("live")]
+        public string Live { get; set; }
+        [JsonPropertyName("old")]
+        public string Old { get; set; }
+        [JsonPropertyName("keys")]
+        public string Keys { get; set; }
+
+        public HistoryStreamRequest(string id)
         {
-            return;
+            this.Id = id;
         }
     }
 }
