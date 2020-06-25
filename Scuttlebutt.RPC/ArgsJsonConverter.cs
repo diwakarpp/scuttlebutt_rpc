@@ -15,7 +15,6 @@
 // along with this library. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -49,7 +48,20 @@ namespace Scuttlebutt.RPC
             writer.WriteStartObject();
             foreach (var kvp in value.GetType().GetProperties())
             {
-                writer.WriteStringValue(kvp.Name);
+                var prop = value.GetType().GetProperty(kvp.Name).GetValue(value);
+                if (prop == null)
+                {
+                    continue;
+                }
+
+                if (value.GetType().GetProperty(kvp.Name).GetType() == typeof(bool))
+                {
+                    writer.WriteBoolean(kvp.Name, (bool)prop);
+                }
+                else
+                {
+                    writer.WriteString(kvp.Name, (string)prop);
+                }
             }
             writer.WriteEndObject();
         }
