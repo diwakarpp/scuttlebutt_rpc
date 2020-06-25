@@ -18,21 +18,61 @@ using System.Text.Json.Serialization;
 
 namespace Scuttlebutt.RPC
 {
+    /// <summary>
+    ///   This class represents the arguments to the CreateHistoryStream
+    ///   procedure call
+    /// </summary>
     public class HistoryStreamRequest : RequestArgs
     {
+        /// <summary>
+        ///   The id of the feed
+        /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
+
+        /// <summary>
+        ///   If specified, return messages starting at this number, else,
+        ///   return from the beginning
+        /// </summary>
         [JsonPropertyName("seq")]
         public string Seq { get; set; }
+
+        /// <summary>
+        ///   Maximum number of messages to retrieve, will always retrieve the
+        ///   earliest, defaults to unlimited
+        /// </summary>
         [JsonPropertyName("limit")]
         public string Limit { get; set; }
-        [JsonPropertyName("live")]
-        public string Live { get; set; }
-        [JsonPropertyName("old")]
-        public string Old { get; set; }
-        [JsonPropertyName("keys")]
-        public string Keys { get; set; }
 
+        /// <summary>
+        ///   Keep the stream open to receive new messages as posted, defaults
+        ///   to false, closing the stream as the messages are sent
+        /// </summary>
+        [JsonPropertyName("live")]
+        public bool Live { get; set; }
+
+        /// <summary>
+        ///   If true starts sending messages already posted by the current
+        ///   feed, else, only sends new ones. Defaults to true
+        /// </summary>
+        [JsonPropertyName("old")]
+        public bool Old { get; set; }
+
+        /// <summary>
+        ///   If true also send the key and timestamp of the messages. Defaults
+        ///   to true
+        /// </summary>
+        [JsonPropertyName("keys")]
+        public bool Keys { get; set; }
+
+        /// <summary>
+        ///   Builds the CreateHistoryStream arguments only specifiying the
+        ///   required argument, id, leaving the rest empty
+        /// </summary>
+        /// <param name="id">
+        ///   The id in the shape of an @ plus the public key of
+        ///   the feed plus .ed25519
+        /// <param>
         public HistoryStreamRequest(string id)
         {
             this.Id = id;
