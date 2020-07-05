@@ -18,8 +18,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using static Scuttlebutt.RPC.Utils;
-
 namespace Scuttlebutt.RPC
 {
     /// <summary>
@@ -151,11 +149,11 @@ namespace Scuttlebutt.RPC
 
                 if (propType == typeof(bool))
                 {
-                    writer.WriteBoolean(ToCamelCase(kvp.Name), (bool)prop);
+                    writer.WriteBoolean(kvp.Name.ToCamelCase(), (bool)prop);
                 }
                 else
                 {
-                    writer.WriteString(ToCamelCase(kvp.Name), (string)prop);
+                    writer.WriteString(kvp.Name.ToCamelCase(), (string)prop);
                 }
             }
 

@@ -20,7 +20,7 @@ namespace Scuttlebutt.RPC
 {
     public static class Utils
     {
-        public static string ToCamelCase(string str)
+        public static string ToCamelCase(this string str)
         {
             return Char.ToLowerInvariant(str[0]) + str.Substring(1);
         }
