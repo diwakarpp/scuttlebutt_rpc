@@ -27,6 +27,10 @@ namespace Scuttlebutt.RPC
         Async
     }
 
+    /// <summary>
+    ///   Represents a RPC call object, it can be serialized by
+    ///   calling <see cref="Serialize" qualifyHint="true" autoUpgrade="true" />
+    /// </summary>
     public class RPC
     {
         [JsonPropertyName("name")]
@@ -59,7 +63,7 @@ namespace Scuttlebutt.RPC
                 new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
             );
             options.Converters.Add(
-                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                                   new ArgsJsonConverter()
             );
 
             return JsonSerializer.Serialize(this, options);

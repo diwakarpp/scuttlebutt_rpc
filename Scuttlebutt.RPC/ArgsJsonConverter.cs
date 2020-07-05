@@ -24,20 +24,21 @@ namespace Scuttlebutt.RPC
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsSubclassOf(typeof(RequestArgs));
+            var isConvert = typeToConvert == typeof(RequestArgs);
+
+            return isConvert;
         }
 
-        public ArgsJsonConverter(JsonSerializerOptions options)
-        {
-
-        }
+        public ArgsJsonConverter() {}
 
         public override RequestArgs Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-
+            // TODO: Implement it correctly
+            var obj = new HistoryStreamRequest("0");
+            return obj.Read(ref reader, typeToConvert, options);
         }
 
         public override void Write(
@@ -45,25 +46,7 @@ namespace Scuttlebutt.RPC
             RequestArgs value,
             JsonSerializerOptions options)
         {
-            writer.WriteStartObject();
-            foreach (var kvp in value.GetType().GetProperties())
-            {
-                var prop = value.GetType().GetProperty(kvp.Name).GetValue(value);
-                if (prop == null)
-                {
-                    continue;
-                }
-
-                if (value.GetType().GetProperty(kvp.Name).GetType() == typeof(bool))
-                {
-                    writer.WriteBoolean(kvp.Name, (bool)prop);
-                }
-                else
-                {
-                    writer.WriteString(kvp.Name, (string)prop);
-                }
-            }
-            writer.WriteEndObject();
+            value.Write(writer, value, options);
         }
     }
 }

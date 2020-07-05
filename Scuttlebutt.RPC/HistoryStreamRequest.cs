@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this library. If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Scuttlebutt.RPC
@@ -22,6 +24,7 @@ namespace Scuttlebutt.RPC
     ///   This class represents the arguments to the CreateHistoryStream
     ///   procedure call
     /// </summary>
+    [JsonConverter(typeof(ArgsJsonConverter))]
     public class HistoryStreamRequest : RequestArgs
     {
         /// <summary>
@@ -49,21 +52,21 @@ namespace Scuttlebutt.RPC
         ///   to false, closing the stream as the messages are sent
         /// </summary>
         [JsonPropertyName("live")]
-        public bool Live { get; set; }
+        public Nullable<bool> Live { get; set; }
 
         /// <summary>
         ///   If true starts sending messages already posted by the current
         ///   feed, else, only sends new ones. Defaults to true
         /// </summary>
         [JsonPropertyName("old")]
-        public bool Old { get; set; }
+        public Nullable<bool> Old { get; set; }
 
         /// <summary>
         ///   If true also send the key and timestamp of the messages. Defaults
         ///   to true
         /// </summary>
         [JsonPropertyName("keys")]
-        public bool Keys { get; set; }
+        public Nullable<bool> Keys { get; set; }
 
         /// <summary>
         ///   Builds the CreateHistoryStream arguments only specifiying the
@@ -76,6 +79,87 @@ namespace Scuttlebutt.RPC
         public HistoryStreamRequest(string id)
         {
             this.Id = id;
+        }
+
+        public override RequestArgs Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+        {
+
+            // TODO: Case switch for each specific instance
+            var obj = new HistoryStreamRequest("0");
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.PropertyName:
+                    {
+                        switch (reader.GetString())
+                        {
+                            case "id": {
+                                obj.Id = reader.GetString();
+                                break;
+                            }
+                            case "seq": {
+                                obj.Seq = reader.GetString();
+                                break;
+                            }
+                            case "limit": {
+                                obj.Limit = reader.GetString();
+                                break;
+                            }
+                            case "live": {
+                                obj.Live = reader.GetBoolean();
+                                break;
+                            }
+                            case "old": {
+                                obj.Old   = reader.GetBoolean();
+                                break;
+                            }
+                            case "keys": {
+                                obj.Keys  = reader.GetBoolean();
+                                break;
+                            }
+
+                            default: throw new InvalidCastException("Unsupported JSON value");
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        throw new InvalidCastException("Unsupported JSON value");
+                    }
+                }
+            }
+
+            return obj;
+        }
+
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, RequestArgs value, System.Text.Json.JsonSerializerOptions options)
+        {
+            // TODO: Case switch for each specific instance
+            writer.WriteStartObject();
+
+            foreach (var kvp in value.GetType().GetProperties())
+            {
+                var prop = value.GetType().GetProperty(kvp.Name).GetValue(value);
+                if (prop == null)
+                {
+                    continue;
+                }
+
+                var propType = value.GetType().GetProperty(kvp.Name).PropertyType;
+
+                if (propType == typeof(bool))
+                {
+                    writer.WriteBoolean(kvp.Name, (bool)prop);
+                }
+                else
+                {
+                    writer.WriteString(kvp.Name, (string)prop);
+                }
+            }
+
+            writer.WriteEndObject();
         }
     }
 }

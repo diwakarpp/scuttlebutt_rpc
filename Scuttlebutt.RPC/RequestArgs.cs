@@ -14,7 +14,23 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this library. If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace Scuttlebutt.RPC
 {
-    public abstract class RequestArgs { }
+    public abstract class RequestArgs {
+        public abstract void Write(
+            Utf8JsonWriter writer,
+            RequestArgs value,
+            JsonSerializerOptions options
+        );
+
+        public abstract RequestArgs Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        );
+    }
 }
