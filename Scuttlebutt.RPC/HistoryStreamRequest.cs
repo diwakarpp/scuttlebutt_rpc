@@ -81,7 +81,10 @@ namespace Scuttlebutt.RPC
             this.Id = id;
         }
 
-        public override RequestArgs Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+        public override RequestArgs Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
 
             var obj = new HistoryStreamRequest("0");
@@ -139,7 +142,10 @@ namespace Scuttlebutt.RPC
             return obj;
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, RequestArgs value, System.Text.Json.JsonSerializerOptions options)
+        public override void Write(
+            Utf8JsonWriter writer,
+            RequestArgs value,
+            JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
