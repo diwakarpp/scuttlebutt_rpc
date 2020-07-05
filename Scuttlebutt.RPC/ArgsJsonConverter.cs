@@ -29,7 +29,7 @@ namespace Scuttlebutt.RPC
             return isConvert;
         }
 
-        public ArgsJsonConverter() {}
+        public ArgsJsonConverter() { }
 
         public override RequestArgs Read(
             ref Utf8JsonReader reader,

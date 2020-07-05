@@ -147,7 +147,7 @@ namespace Scuttlebutt.RPC.Tests
             var header = new Header();
             // Cast to int then convert to uint, conversion operator looks
             // the same as cast operator
-            var length = (uint) (int) "hello world!".Length;
+            var length = (uint)(int)"hello world!".Length;
 
             header.SetBodyLength(length);
 

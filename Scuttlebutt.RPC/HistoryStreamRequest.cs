@@ -90,43 +90,49 @@ namespace Scuttlebutt.RPC
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.PropertyName:
-                    {
-                        switch (reader.GetString())
                         {
-                            case "id": {
-                                obj.Id = reader.GetString();
-                                break;
-                            }
-                            case "seq": {
-                                obj.Seq = reader.GetString();
-                                break;
-                            }
-                            case "limit": {
-                                obj.Limit = reader.GetString();
-                                break;
-                            }
-                            case "live": {
-                                obj.Live = reader.GetBoolean();
-                                break;
-                            }
-                            case "old": {
-                                obj.Old   = reader.GetBoolean();
-                                break;
-                            }
-                            case "keys": {
-                                obj.Keys  = reader.GetBoolean();
-                                break;
-                            }
+                            switch (reader.GetString())
+                            {
+                                case "id":
+                                    {
+                                        obj.Id = reader.GetString();
+                                        break;
+                                    }
+                                case "seq":
+                                    {
+                                        obj.Seq = reader.GetString();
+                                        break;
+                                    }
+                                case "limit":
+                                    {
+                                        obj.Limit = reader.GetString();
+                                        break;
+                                    }
+                                case "live":
+                                    {
+                                        obj.Live = reader.GetBoolean();
+                                        break;
+                                    }
+                                case "old":
+                                    {
+                                        obj.Old = reader.GetBoolean();
+                                        break;
+                                    }
+                                case "keys":
+                                    {
+                                        obj.Keys = reader.GetBoolean();
+                                        break;
+                                    }
 
-                            default: throw new InvalidCastException("Unsupported JSON value");
+                                default: throw new InvalidCastException("Unsupported JSON value");
+                            }
+                            break;
                         }
-                        break;
-                    }
 
                     default:
-                    {
-                        throw new InvalidCastException("Unsupported JSON value");
-                    }
+                        {
+                            throw new InvalidCastException("Unsupported JSON value");
+                        }
                 }
             }
 

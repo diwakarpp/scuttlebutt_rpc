@@ -20,7 +20,8 @@ using System.Text.Json.Serialization;
 
 namespace Scuttlebutt.RPC
 {
-    public abstract class RequestArgs {
+    public abstract class RequestArgs
+    {
         public abstract void Write(
             Utf8JsonWriter writer,
             RequestArgs value,

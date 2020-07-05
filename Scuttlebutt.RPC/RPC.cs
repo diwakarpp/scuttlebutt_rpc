@@ -63,7 +63,7 @@ namespace Scuttlebutt.RPC
                 new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
             );
             options.Converters.Add(
-                                   new ArgsJsonConverter()
+                new ArgsJsonConverter()
             );
 
             return JsonSerializer.Serialize(this, options);

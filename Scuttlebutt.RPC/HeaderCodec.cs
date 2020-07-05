@@ -26,7 +26,7 @@ namespace Scuttlebutt.RPC.Codec
     {
         Binary = 0b_00,
         UTFStr = 0b_01,
-          JSON = 0b_10,
+        JSON = 0b_10,
     }
 
     /// <summary>
@@ -39,9 +39,9 @@ namespace Scuttlebutt.RPC.Codec
         public const sbyte IS_ENDERR = 0b_0000_0100;
         public const sbyte IS_STREAM = 0b_0000_1000;
 
-        const uint FLAGS_SIZE   = 1;
+        const uint FLAGS_SIZE = 1;
         const uint BLENGTH_SIZE = 4;
-        const uint REQNUM_SIZE  = 4;
+        const uint REQNUM_SIZE = 4;
 
         public Header()
         {
@@ -104,7 +104,7 @@ namespace Scuttlebutt.RPC.Codec
         public BodyType GetBodyType()
         {
             var btype = this.Inner[0] & 0b_11;
-            return (BodyType) btype;
+            return (BodyType)btype;
         }
 
         public Header SetBodyLength(uint length)
