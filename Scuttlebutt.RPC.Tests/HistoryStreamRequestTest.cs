@@ -15,18 +15,31 @@
 // along with this library. If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Text.Json;
+
 using Xunit;
+
 using Scuttlebutt.RPC;
 
 namespace Scuttlebutt.RPC.Tests
 {
-    public class ScRPC
+    public class HistoryStreamRequestTest
     {
         [Fact]
         public void ItSerializes()
         {
             var rpc = RPC.CreateHistoryStream("1");
             var expected = "{\n  \"name\": [\n    \"createHistoryStream\"\n  ],\n  \"type\": \"source\",\n  \"args\": [\n    {\n      \"id\": \"1\"\n    }\n  ]\n}";
+
+            Assert.Equal(expected, rpc.Serialize());
+        }
+
+        [Fact]
+        public void ItDeserializes()
+        {
+            var expected = "{\n  \"name\": [\n    \"createHistoryStream\"\n  ],\n  \"type\": \"source\",\n  \"args\": [\n    {\n      \"id\": \"1\"\n    }\n  ]\n}";
+
+            var rpc = JsonSerializer.Deserialize<RPC>(expected);
 
             Assert.Equal(expected, rpc.Serialize());
         }

@@ -136,7 +136,7 @@ namespace Scuttlebutt.RPC.Codec
             return BitConverter.ToUInt32(bytes, 0);
         }
 
-        public Header SetRequestNumber(uint reqnum)
+        public Header SetRequestNumber(int reqnum)
         {
             var bytes = BitConverter.GetBytes(reqnum);
 
@@ -152,7 +152,7 @@ namespace Scuttlebutt.RPC.Codec
             return this;
         }
 
-        public uint GetRequestNumber()
+        public int GetRequestNumber()
         {
             var bytes = new byte[4];
             Buffer.BlockCopy(this.Inner, 5, bytes, 0, 4);
@@ -162,7 +162,7 @@ namespace Scuttlebutt.RPC.Codec
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
 
-            return BitConverter.ToUInt32(bytes, 0);
+            return BitConverter.ToInt32(bytes, 0);
         }
 
     }

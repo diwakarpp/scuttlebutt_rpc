@@ -29,7 +29,7 @@ namespace Scuttlebutt.RPC
 
     /// <summary>
     ///   Represents a RPC call object, it can be serialized by
-    ///   calling <see cref="Serialize" qualifyHint="true" autoUpgrade="true" />
+    ///   calling <see cref="Serialize" autoUpgrade="true" />
     /// </summary>
     public class RPC
     {
