@@ -18,6 +18,8 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using static Scuttlebutt.RPC.Utils;
+
 namespace Scuttlebutt.RPC
 {
     /// <summary>
@@ -84,7 +86,6 @@ namespace Scuttlebutt.RPC
         public override RequestArgs Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
 
-            // TODO: Case switch for each specific instance
             var obj = new HistoryStreamRequest("0");
             while (reader.Read())
             {
@@ -136,7 +137,6 @@ namespace Scuttlebutt.RPC
 
         public override void Write(System.Text.Json.Utf8JsonWriter writer, RequestArgs value, System.Text.Json.JsonSerializerOptions options)
         {
-            // TODO: Case switch for each specific instance
             writer.WriteStartObject();
 
             foreach (var kvp in value.GetType().GetProperties())
@@ -151,11 +151,11 @@ namespace Scuttlebutt.RPC
 
                 if (propType == typeof(bool))
                 {
-                    writer.WriteBoolean(kvp.Name, (bool)prop);
+                    writer.WriteBoolean(ToCamelCase(kvp.Name), (bool)prop);
                 }
                 else
                 {
-                    writer.WriteString(kvp.Name, (string)prop);
+                    writer.WriteString(ToCamelCase(kvp.Name), (string)prop);
                 }
             }
 

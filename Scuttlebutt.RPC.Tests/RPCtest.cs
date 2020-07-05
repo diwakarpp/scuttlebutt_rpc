@@ -26,7 +26,7 @@ namespace Scuttlebutt.RPC.Tests
         public void ItSerializes()
         {
             var rpc = RPC.CreateHistoryStream("1");
-            var expected = "{\n  \"name\": [\"createHistoryStream\"],\n  \"type\": \"source\",\n  \"args\": [\n    {\n      \"id\": \"1\"\n    }\n  ]\n}";
+            var expected = "{\n  \"name\": [\n    \"createHistoryStream\"\n  ],\n  \"type\": \"source\",\n  \"args\": [\n    {\n      \"id\": \"1\"\n    }\n  ]\n}";
 
             Assert.Equal(expected, rpc.Serialize());
         }
